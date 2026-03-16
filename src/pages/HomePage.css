@@ -595,6 +595,78 @@
   text-align: center;
 }
 
+/* Sponsors Table */
+.sponsors-table {
+  max-width: 700px;
+  margin: 0 auto 24px;
+  width: 100%;
+}
+
+.sponsors-header {
+  display: grid;
+  grid-template-columns: 1fr 40px 1fr;
+  gap: 8px;
+  padding: 8px 12px;
+  border-bottom: 2px solid #7F9DB1;
+  margin-bottom: 8px;
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: #7F9DB1;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.sponsors-header span:first-child {
+  text-align: right;
+}
+
+.sponsors-header span:nth-child(2) {
+  text-align: center;
+}
+
+.sponsors-header span:last-child {
+  text-align: left;
+}
+
+.sponsors-row {
+  display: grid;
+  grid-template-columns: 1fr 40px 1fr;
+  gap: 8px;
+  padding: 6px 12px;
+  border-bottom: 1px solid rgba(127, 157, 177, 0.15);
+  transition: background 0.3s ease;
+}
+
+.sponsors-row:hover {
+  background: rgba(180, 214, 227, 0.15);
+}
+
+.sponsors-row .person-name:first-child {
+  text-align: right;
+}
+
+.sponsors-row .person-name:last-child {
+  text-align: left;
+}
+
+.sponsor-number {
+  text-align: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 14px;
+  color: #7F9DB1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sponsor-couples {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(127, 157, 177, 0.3);
+  text-align: center;
+}
+
 /* Dress Code Section */
 .dresscode-section {
   padding: 80px 20px;
@@ -1003,6 +1075,24 @@
   }
   .side-by-side {
     gap: 20px;
+  }
+  .sponsors-table {
+    font-size: 14px;
+  }
+  .sponsors-header {
+    font-size: 11px;
+    grid-template-columns: 1fr 30px 1fr;
+  }
+  .sponsors-row {
+    grid-template-columns: 1fr 30px 1fr;
+    padding: 4px 6px;
+  }
+  .sponsors-row .person-name {
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .sponsor-number {
+    font-size: 12px;
   }
   .dresscode-note {
     font-size: 15px;

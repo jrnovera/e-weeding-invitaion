@@ -108,28 +108,60 @@ const HomePage = () => {
   }
 
   const entourage = {
-    principal: [
-      { role: 'Father of the Groom', name: 'Mr. Roberto Santos' },
-      { role: 'Mother of the Groom', name: 'Mrs. Maria Santos' },
-      { role: 'Father of the Bride', name: 'Mr. Antonio Reyes' },
-      { role: 'Mother of the Bride', name: 'Mrs. Elena Reyes' },
+    principalSponsors: [
+      { ninong: 'Vice Mayor Billy Aceron', ninang: 'Magdalena Maranoc' },
+      { ninong: 'Sb Bernard Aceron', ninang: 'Nida Caancan' },
+      { ninong: 'Sb. Franklin Nancin', ninang: 'Vilma Arangorin' },
+      { ninong: 'Atty. Christopher Laurence Monato', ninang: 'Irene Globio' },
+      { ninong: 'Sb. Eric Alba', ninang: 'Marie Arangorin' },
+      { ninong: 'ABC Brgy. Captain Mr. Lloyd Ambuyoc and Mrs. Editha Ambuyoc', ninang: null },
+      { ninong: 'Brgy. Captain Antonio Asis', ninang: 'Brgy. Kgwd Paz Ambuyoc' },
+      { ninong: 'Brgy. Captain Joy Escobal', ninang: 'Marie Trapsi' },
+      { ninong: 'Brgy. Kgwd Jimuel Fronda', ninang: 'Anita Sevilla' },
+      { ninong: 'Ricardo Yabut', ninang: 'Emilie Segismundo' },
+      { ninong: 'Alex Revelar', ninang: 'Mariz Revelar' },
+      { ninong: 'Sarly Aninzo', ninang: 'Mary Jane Maranoc' },
+      { ninong: 'District Supervisor Mr. & Mrs. Richard Doctolero Ruby Doctolero', ninang: null },
+      { ninong: 'Isagani Ginez', ninang: 'Cristina Ginez' },
+      { ninong: 'David Amistad', ninang: 'Sheryl Arangorin' },
+      { ninong: 'Enrique Quinto', ninang: 'Carina Maranoc' },
+      { ninong: 'Edgar Araboy', ninang: 'Arlene Quijano' },
+      { ninong: 'Mario Anoche', ninang: 'Flory Fe Arconado' },
+      { ninong: 'Delfin Abaga', ninang: 'Chonchita Ordonia' },
+      { ninong: 'Val Obviasca', ninang: 'Feliciana De Leon' },
+      { ninong: 'Jerrel Aragon', ninang: 'Christy Umayam' },
+      { ninong: 'Neil Asis', ninang: 'Elsa Ambuyoc' },
+      { ninong: 'Rolando Tuazon', ninang: 'Levi Forones' },
+      { ninong: 'Nestor Aledo', ninang: 'Carlo Arangorin' },
+      { ninong: 'Ernie Quijano', ninang: 'Dina Arangorin' },
+      { ninong: null, ninang: 'Marilyn Altares' },
     ],
-    sponsors: [
-      'Mr. & Mrs. Carlos Cruz',
-      'Mr. & Mrs. David Garcia',
-      'Mr. & Mrs. Miguel Torres',
-      'Mr. & Mrs. Rafael Dela Cruz',
+    sponsorCouples: [
+      'Mr. and Mrs. Nestor Aguas',
+      'Mr. and Mrs. Leo Portin',
+      'Mr. & Mrs. Tong Navarro',
+      'Mr. and Mrs. Globio',
+      'Mr. and Mrs. Ramoncito Pecson',
+      'Mr. & Mrs. Luis Labuton',
+      'Mr. and Mrs. Larry Miranda',
+      'Mr. and Mrs. Pablito Edora Jr',
     ],
-    bestMan: 'Marco Santos',
-    maidOfHonor: 'Angela Reyes',
-    groomsmen: ['Luis Santos', 'Kevin Garcia', 'Patrick Cruz', 'James Torres'],
-    bridesmaids: ['Maria Garcia', 'Sofia Cruz', 'Diana Torres', 'Nina Reyes'],
-    flowerGirls: ['Emma Santos', 'Mia Cruz'],
-    ringBearer: 'Lucas Garcia',
-    bibleBearers: ['Gabriel Santos', 'Isabella Reyes'],
-    cordSponsors: ['Mr. & Mrs. Fernando Lim', 'Mr. & Mrs. Ricardo Tan'],
-    veilSponsors: ['Mr. & Mrs. Eduardo Sy', 'Mr. & Mrs. Benjamin Go'],
-    candleSponsors: ['Mr. & Mrs. Manuel Uy', 'Mr. & Mrs. Lorenzo Ang'],
+    parents: {
+      groom: [
+        { role: "Groom's Father", name: 'Fred Abaga' },
+        { role: "Groom's Mother", name: 'Daisy Abaga' },
+      ],
+      bride: [
+        { role: "Bride's Father", name: 'Rony Olea' },
+        { role: "Bride's Mother", name: 'Glenda Olea' },
+      ],
+    },
+    bestMan: 'Romnick Globio',
+    maidOfHonor: 'Dianne Ritz Gines',
+    groomsmen: ['Gerone Ginez', 'Aldrin Maranoc', 'Fermar Santianes', 'Justine Navarro', 'Laurence Maranoc', 'Roldan Ambuyoc'],
+    bridesmaids: ['April Banaag', 'Jessica Ginez', 'Christine May Abaga', 'Glenda Kempis', 'Kimberly Guanzon', 'Baybee Jeanne Oben', 'Camille Labuton'],
+    ringBearers: ['Owen Ginez', 'Nicolo Globio', 'Gian Arangorin'],
+    flowerGirls: ['Gelexza Yulireign Ginez', 'Dea Marcela Ginez', 'Amira Arangorin'],
   }
 
   return (
@@ -349,27 +381,47 @@ const HomePage = () => {
           <span className="divider-line"></span>
         </motion.div>
 
-        <motion.div className="entourage-group" variants={fadeInUp}>
-          <h3 className="entourage-role">Parents of the Couple</h3>
-          <div className="entourage-names two-column">
-            {entourage.principal.map((p, i) => (
-              <div key={i} className="entourage-person">
-                <p className="person-role">{p.role}</p>
-                <p className="person-name">{p.name}</p>
-              </div>
+        {/* Parents */}
+        <motion.div className="entourage-group side-by-side" variants={fadeInUp}>
+          <div className="entourage-half">
+            <h3 className="entourage-role">Groom&apos;s Parents</h3>
+            {entourage.parents.groom.map((p, i) => (
+              <p key={i} className="person-name">{p.name}</p>
+            ))}
+          </div>
+          <div className="entourage-half">
+            <h3 className="entourage-role">Bride&apos;s Parents</h3>
+            {entourage.parents.bride.map((p, i) => (
+              <p key={i} className="person-name">{p.name}</p>
             ))}
           </div>
         </motion.div>
 
+        {/* Principal Sponsors */}
         <motion.div className="entourage-group" variants={fadeInUp}>
-          <h3 className="entourage-role">Principal Sponsors (Ninong & Ninang)</h3>
-          <div className="entourage-names">
-            {entourage.sponsors.map((name, i) => (
+          <h3 className="entourage-role">Principal Sponsors</h3>
+          <div className="sponsors-table">
+            <div className="sponsors-header">
+              <span>Ninong</span>
+              <span>#</span>
+              <span>Ninang</span>
+            </div>
+            {entourage.principalSponsors.map((pair, i) => (
+              <div key={i} className="sponsors-row">
+                <span className="person-name">{pair.ninong || ''}</span>
+                <span className="sponsor-number">{i + 1}</span>
+                <span className="person-name">{pair.ninang || ''}</span>
+              </div>
+            ))}
+          </div>
+          <div className="sponsor-couples">
+            {entourage.sponsorCouples.map((name, i) => (
               <p key={i} className="person-name">{name}</p>
             ))}
           </div>
         </motion.div>
 
+        {/* Best Man & Maid of Honor */}
         <motion.div className="entourage-group side-by-side" variants={fadeInUp}>
           <div className="entourage-half">
             <h3 className="entourage-role">Best Man</h3>
@@ -381,6 +433,7 @@ const HomePage = () => {
           </div>
         </motion.div>
 
+        {/* Groomsmen & Bridesmaids */}
         <motion.div className="entourage-group side-by-side" variants={fadeInUp}>
           <div className="entourage-half">
             <h3 className="entourage-role">Groomsmen</h3>
@@ -396,50 +449,17 @@ const HomePage = () => {
           </div>
         </motion.div>
 
-        <motion.div className="entourage-group" variants={fadeInUp}>
-          <h3 className="entourage-role">Cord Sponsors</h3>
-          <div className="entourage-names">
-            {entourage.cordSponsors.map((name, i) => (
-              <p key={i} className="person-name">{name}</p>
-            ))}
-          </div>
-        </motion.div>
-
-        <motion.div className="entourage-group" variants={fadeInUp}>
-          <h3 className="entourage-role">Veil Sponsors</h3>
-          <div className="entourage-names">
-            {entourage.veilSponsors.map((name, i) => (
-              <p key={i} className="person-name">{name}</p>
-            ))}
-          </div>
-        </motion.div>
-
-        <motion.div className="entourage-group" variants={fadeInUp}>
-          <h3 className="entourage-role">Candle Sponsors</h3>
-          <div className="entourage-names">
-            {entourage.candleSponsors.map((name, i) => (
-              <p key={i} className="person-name">{name}</p>
-            ))}
-          </div>
-        </motion.div>
-
-        <motion.div className="entourage-group" variants={fadeInUp}>
-          <h3 className="entourage-role">Flower Girls</h3>
-          <div className="entourage-names">
-            {entourage.flowerGirls.map((name, i) => (
-              <p key={i} className="person-name">{name}</p>
-            ))}
-          </div>
-        </motion.div>
-
+        {/* Ring Bearers & Flower Girls */}
         <motion.div className="entourage-group side-by-side" variants={fadeInUp}>
           <div className="entourage-half">
-            <h3 className="entourage-role">Ring Bearer</h3>
-            <p className="person-name">{entourage.ringBearer}</p>
+            <h3 className="entourage-role">Ring Bearers</h3>
+            {entourage.ringBearers.map((name, i) => (
+              <p key={i} className="person-name">{name}</p>
+            ))}
           </div>
           <div className="entourage-half">
-            <h3 className="entourage-role">Bible Bearers</h3>
-            {entourage.bibleBearers.map((name, i) => (
+            <h3 className="entourage-role">Flower Girls</h3>
+            {entourage.flowerGirls.map((name, i) => (
               <p key={i} className="person-name">{name}</p>
             ))}
           </div>
