@@ -404,6 +404,16 @@ const HomePage = () => {
           ✦ ✦ ✦
         </motion.div>
 
+        <motion.div
+          className="hero-scroll-hint"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 2, duration: 1 }}
+        >
+          <span className="scroll-text">Scroll Down</span>
+          <span className="scroll-arrow">▾</span>
+        </motion.div>
+
       </motion.section>
 
       {/* Couple Section */}
@@ -639,9 +649,7 @@ const HomePage = () => {
         </motion.div>
 
         <motion.div className="dresscode-avoid-wrapper" variants={fadeInUp}>
-          <p className="dresscode-avoid">
-            Please avoid wearing <strong>white</strong>, <strong>black</strong>, or <strong>red</strong>.
-          </p>
+         
         </motion.div>
       </motion.section>
 
