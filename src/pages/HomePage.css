@@ -383,6 +383,30 @@
   margin-bottom: 40px;
 }
 
+.couple-frame {
+  position: relative;
+  display: inline-block;
+}
+
+.floral-corner {
+  position: absolute;
+  width: 140px;
+  height: 140px;
+  pointer-events: none;
+  z-index: 2;
+  filter: drop-shadow(0 2px 4px rgba(91, 155, 213, 0.2));
+}
+
+.floral-top-right {
+  top: -35px;
+  right: -35px;
+}
+
+.floral-bottom-left {
+  bottom: -35px;
+  left: -35px;
+}
+
 .couple-image-wrapper {
   position: relative;
   display: inline-block;
@@ -560,12 +584,17 @@
 .gallery-photo {
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(13, 59, 102, 0.1);
+  box-shadow:
+    0 4px 15px rgba(13, 59, 102, 0.15),
+    0 1px 4px rgba(0, 0, 0, 0.1);
+  border: 1.5px solid rgba(127, 157, 177, 0.2);
   transition: all 0.4s ease;
 }
 
 .gallery-carousel-item.active .gallery-photo {
-  box-shadow: 0 8px 30px rgba(13, 59, 102, 0.3);
+  box-shadow:
+    0 8px 30px rgba(13, 59, 102, 0.3),
+    0 0 15px rgba(180, 214, 227, 0.4);
   border: 2px solid #7F9DB1;
 }
 
@@ -619,7 +648,11 @@
 .gallery-preview-content {
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 12px 40px rgba(13, 59, 102, 0.2);
+  box-shadow:
+    0 12px 40px rgba(13, 59, 102, 0.2),
+    0 0 20px rgba(180, 214, 227, 0.35),
+    0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 2px solid rgba(127, 157, 177, 0.25);
   background: #fff;
 }
 
@@ -1031,6 +1064,32 @@
   opacity: 0.9;
 }
 
+/* Scroll to top FAB */
+.scroll-top-fab {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(13, 59, 102, 0.85);
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(13, 59, 102, 0.3);
+  backdrop-filter: blur(4px);
+  transition: background 0.3s ease;
+}
+
+.scroll-top-fab:hover {
+  background: rgba(13, 59, 102, 1);
+}
+
 /* Responsive - Tablet */
 @media (max-width: 768px) {
   .hero-section {
@@ -1086,15 +1145,17 @@
     grid-template-columns: 1fr;
   }
   .dresscode-grid {
-    gap: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
   }
   .dresscode-card {
-    min-width: 240px;
-    padding: 24px 20px;
+    min-width: unset;
+    padding: 20px 14px;
   }
   .dresscode-illustration {
-    width: 120px;
-    height: 210px;
+    width: 100px;
+    height: 180px;
   }
   .footer-names {
     font-size: 40px;
@@ -1273,32 +1334,36 @@
     margin-bottom: 28px;
   }
   .dresscode-grid {
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
   }
   .dresscode-card {
     min-width: unset;
     width: 100%;
-    max-width: 320px;
-    padding: 24px 20px;
+    max-width: unset;
+    padding: 16px 10px;
   }
   .dresscode-illustration {
-    width: 100px;
-    height: 180px;
+    width: 80px;
+    height: 140px;
   }
   .dresscode-card h3 {
-    font-size: 20px;
+    font-size: 16px;
+  }
+  .dresscode-card > p {
+    font-size: 12px;
+    margin-bottom: 12px;
   }
   .color-palette {
-    gap: 8px;
+    gap: 6px;
   }
   .color-swatch {
-    width: 36px;
-    height: 36px;
+    width: 28px;
+    height: 28px;
   }
   .color-labels {
-    font-size: 11px;
+    font-size: 9px;
   }
   .dresscode-avoid {
     font-size: 13px;

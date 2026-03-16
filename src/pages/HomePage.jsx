@@ -147,7 +147,6 @@ const GalleryCarousel = () => {
                       loop
                       muted
                       playsInline
-                      ref={(el) => { if (el) el.playbackRate = 0.5 }}
                     />
                   ) : item.image ? (
                     <img src={item.image} alt={item.label} className="gallery-image" />
@@ -182,7 +181,6 @@ const GalleryCarousel = () => {
                 autoPlay
                 muted
                 playsInline
-                ref={(el) => { if (el) el.playbackRate = 0.5 }}
                 onEnded={() => {
                   videoPlayingRef.current = false
                   advanceToNext()
@@ -206,6 +204,17 @@ const GalleryCarousel = () => {
 const HomePage = () => {
   const audioRef = useRef(null)
   const [isMusicPlaying, setIsMusicPlaying] = useState(false)
+  const [showScrollTop, setShowScrollTop] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrolled = window.scrollY
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight
+      setShowScrollTop(scrolled > docHeight * 0.7)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   useEffect(() => {
     // Pick up audio started from envelope page, or create new
@@ -270,14 +279,14 @@ const HomePage = () => {
       { ninong: 'Sb. Franklin Nancin', ninang: 'Vilma Arangorin' },
       { ninong: 'Atty. Christopher Laurence Monato', ninang: 'Irene Globio' },
       { ninong: 'Sb. Eric Alba', ninang: 'Marie Arangorin' },
-      { ninong: 'ABC Brgy. Captain Mr. Lloyd Ambuyoc and Mrs. Editha Ambuyoc', ninang: null },
+      { ninong: 'ABC Brgy. Captain Mr. Lloyd Ambuyoc ', ninang: "Mrs. Editha Ambuyoc"},
       { ninong: 'Brgy. Captain Antonio Asis', ninang: 'Brgy. Kgwd Paz Ambuyoc' },
       { ninong: 'Brgy. Captain Joy Escobal', ninang: 'Marie Trapsi' },
       { ninong: 'Brgy. Kgwd Jimuel Fronda', ninang: 'Anita Sevilla' },
       { ninong: 'Ricardo Yabut', ninang: 'Emilie Segismundo' },
       { ninong: 'Alex Revelar', ninang: 'Mariz Revelar' },
       { ninong: 'Sarly Aninzo', ninang: 'Mary Jane Maranoc' },
-      { ninong: 'District Supervisor Mr. & Mrs. Richard Doctolero Ruby Doctolero', ninang: null },
+      { ninong: 'District Supervisor Mr. Richard Doctolero ', ninang: ' Mrs.Ruby Doctolero '},
       { ninong: 'Isagani Ginez', ninang: 'Cristina Ginez' },
       { ninong: 'David Amistad', ninang: 'Sheryl Arangorin' },
       { ninong: 'Enrique Quinto', ninang: 'Carina Maranoc' },
@@ -288,9 +297,9 @@ const HomePage = () => {
       { ninong: 'Jerrel Aragon', ninang: 'Christy Umayam' },
       { ninong: 'Neil Asis', ninang: 'Elsa Ambuyoc' },
       { ninong: 'Rolando Tuazon', ninang: 'Levi Forones' },
-      { ninong: 'Nestor Aledo', ninang: 'Carlo Arangorin' },
       { ninong: 'Ernie Quijano', ninang: 'Dina Arangorin' },
-      { ninong: null, ninang: 'Marilyn Altares' },
+      { ninong: 'Carlo Arangaorin', ninang: 'Marilyn Altares' },
+      {ninong: "Nestor Aledo", ninang: ""}
     ],
     sponsorCouples: [
       'Mr. and Mrs. Nestor Aguas',
@@ -454,16 +463,170 @@ const HomePage = () => {
         </motion.div>
 
         <motion.div className="couple-showcase" variants={scaleIn}>
-          <div className="couple-image-wrapper">
-            <video
-              className="couple-image"
-              src="/assets/images/couple-video.mp4"
-              autoPlay
-              loop
-              muted
-              playsInline
-            />
-            <div className="couple-image-glow" />
+          <div className="couple-frame">
+            {/* Top-right floral corner */}
+            <svg className="floral-corner floral-top-right" viewBox="0 0 250 250" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                {/* Rose petal shape */}
+                <path id="petal" d="M0,-12 C5,-10 10,-5 10,2 C10,8 5,12 0,12 C-5,12 -10,8 -10,2 C-10,-5 -5,-10 0,-12Z" />
+                {/* Leaf shape */}
+                <path id="leaf" d="M0,0 C5,-3 20,-8 35,0 C20,8 5,3 0,0Z" />
+              </defs>
+
+              {/* Eucalyptus branches */}
+              <g opacity="0.7">
+                <path d="M120,95 Q95,70 80,30" fill="none" stroke="#8AAE7F" strokeWidth="1.5" />
+                <use href="#leaf" x="95" y="55" fill="#8FBC8F" transform="rotate(-50 95 55) scale(0.7)" />
+                <use href="#leaf" x="105" y="75" fill="#9DC09D" transform="rotate(-30 105 75) scale(0.6)" />
+                <use href="#leaf" x="87" y="38" fill="#8FBC8F" transform="rotate(-65 87 38) scale(0.55)" />
+
+                <path d="M180,130 Q200,100 210,60" fill="none" stroke="#8AAE7F" strokeWidth="1.5" />
+                <use href="#leaf" x="195" y="85" fill="#9DC09D" transform="rotate(20 195 85) scale(0.65)" />
+                <use href="#leaf" x="205" y="70" fill="#8FBC8F" transform="rotate(35 205 70) scale(0.5)" />
+
+                <path d="M140,110 Q120,130 90,120" fill="none" stroke="#8AAE7F" strokeWidth="1.2" />
+                <use href="#leaf" x="115" y="120" fill="#9DC09D" transform="rotate(-170 115 120) scale(0.5)" />
+              </g>
+
+              {/* Large blue rose - top right */}
+              <g transform="translate(165, 55)">
+                <use href="#petal" fill="#4A90C4" transform="rotate(0) scale(2.8)" />
+                <use href="#petal" fill="#5A9FD4" transform="rotate(45) scale(2.6)" />
+                <use href="#petal" fill="#5A9FD4" transform="rotate(90) scale(2.5)" />
+                <use href="#petal" fill="#6BAFE0" transform="rotate(135) scale(2.3)" />
+                <use href="#petal" fill="#6BAFE0" transform="rotate(180) scale(2.2)" />
+                <use href="#petal" fill="#7DBDE8" transform="rotate(225) scale(2.0)" />
+                <use href="#petal" fill="#7DBDE8" transform="rotate(270) scale(1.8)" />
+                <use href="#petal" fill="#95CDF0" transform="rotate(315) scale(1.6)" />
+                <use href="#petal" fill="#95CDF0" transform="rotate(20) scale(1.3)" />
+                <use href="#petal" fill="#B0DCF5" transform="rotate(70) scale(1.0)" />
+                <use href="#petal" fill="#C8E8FA" transform="rotate(140) scale(0.7)" />
+                <circle cx="0" cy="0" r="4" fill="#D4EFFF" />
+              </g>
+
+              {/* Medium rose */}
+              <g transform="translate(120, 40)">
+                <use href="#petal" fill="#6CA6CD" transform="rotate(15) scale(1.8)" />
+                <use href="#petal" fill="#7DB8D8" transform="rotate(65) scale(1.7)" />
+                <use href="#petal" fill="#7DB8D8" transform="rotate(115) scale(1.6)" />
+                <use href="#petal" fill="#8EC8E5" transform="rotate(165) scale(1.4)" />
+                <use href="#petal" fill="#8EC8E5" transform="rotate(215) scale(1.3)" />
+                <use href="#petal" fill="#A0D6EF" transform="rotate(265) scale(1.1)" />
+                <use href="#petal" fill="#B4E0F5" transform="rotate(315) scale(0.9)" />
+                <use href="#petal" fill="#C8EAFC" transform="rotate(30) scale(0.6)" />
+                <circle cx="0" cy="0" r="3" fill="#D4EFFF" />
+              </g>
+
+              {/* Small rose bud */}
+              <g transform="translate(200, 100)">
+                <use href="#petal" fill="#87CEEB" transform="rotate(10) scale(1.4)" />
+                <use href="#petal" fill="#99D6EF" transform="rotate(80) scale(1.2)" />
+                <use href="#petal" fill="#99D6EF" transform="rotate(150) scale(1.1)" />
+                <use href="#petal" fill="#ADD8E6" transform="rotate(220) scale(0.9)" />
+                <use href="#petal" fill="#C0E4F0" transform="rotate(290) scale(0.7)" />
+                <circle cx="0" cy="0" r="2.5" fill="#D4EFFF" />
+              </g>
+
+              {/* Tiny bud */}
+              <g transform="translate(145, 95)">
+                <use href="#petal" fill="#ADD8E6" transform="rotate(30) scale(0.9)" />
+                <use href="#petal" fill="#B8E0F0" transform="rotate(120) scale(0.8)" />
+                <use href="#petal" fill="#C8EAFC" transform="rotate(210) scale(0.6)" />
+              </g>
+
+              {/* Gold geometric lines */}
+              <line x1="100" y1="8" x2="240" y2="8" stroke="#C9A96E" strokeWidth="0.7" opacity="0.35" />
+              <line x1="242" y1="8" x2="242" y2="140" stroke="#C9A96E" strokeWidth="0.7" opacity="0.35" />
+              <line x1="105" y1="14" x2="236" y2="14" stroke="#C9A96E" strokeWidth="0.5" opacity="0.2" />
+              <line x1="236" y1="14" x2="236" y2="135" stroke="#C9A96E" strokeWidth="0.5" opacity="0.2" />
+            </svg>
+
+            {/* Bottom-left floral corner */}
+            <svg className="floral-corner floral-bottom-left" viewBox="0 0 250 250" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <path id="petal2" d="M0,-12 C5,-10 10,-5 10,2 C10,8 5,12 0,12 C-5,12 -10,8 -10,2 C-10,-5 -5,-10 0,-12Z" />
+                <path id="leaf2" d="M0,0 C5,-3 20,-8 35,0 C20,8 5,3 0,0Z" />
+              </defs>
+
+              {/* Eucalyptus branches */}
+              <g opacity="0.7">
+                <path d="M130,155 Q155,180 170,220" fill="none" stroke="#8AAE7F" strokeWidth="1.5" />
+                <use href="#leaf2" x="155" y="195" fill="#8FBC8F" transform="rotate(130 155 195) scale(0.7)" />
+                <use href="#leaf2" x="145" y="175" fill="#9DC09D" transform="rotate(150 145 175) scale(0.6)" />
+                <use href="#leaf2" x="163" y="212" fill="#8FBC8F" transform="rotate(115 163 212) scale(0.55)" />
+
+                <path d="M70,120 Q50,150 40,190" fill="none" stroke="#8AAE7F" strokeWidth="1.5" />
+                <use href="#leaf2" x="55" y="165" fill="#9DC09D" transform="rotate(-160 55 165) scale(0.65)" />
+                <use href="#leaf2" x="45" y="180" fill="#8FBC8F" transform="rotate(-145 45 180) scale(0.5)" />
+
+                <path d="M110,140 Q130,120 160,130" fill="none" stroke="#8AAE7F" strokeWidth="1.2" />
+                <use href="#leaf2" x="135" y="130" fill="#9DC09D" transform="rotate(10 135 130) scale(0.5)" />
+              </g>
+
+              {/* Large blue rose */}
+              <g transform="translate(85, 195)">
+                <use href="#petal2" fill="#4A90C4" transform="rotate(0) scale(2.8)" />
+                <use href="#petal2" fill="#5A9FD4" transform="rotate(45) scale(2.6)" />
+                <use href="#petal2" fill="#5A9FD4" transform="rotate(90) scale(2.5)" />
+                <use href="#petal2" fill="#6BAFE0" transform="rotate(135) scale(2.3)" />
+                <use href="#petal2" fill="#6BAFE0" transform="rotate(180) scale(2.2)" />
+                <use href="#petal2" fill="#7DBDE8" transform="rotate(225) scale(2.0)" />
+                <use href="#petal2" fill="#7DBDE8" transform="rotate(270) scale(1.8)" />
+                <use href="#petal2" fill="#95CDF0" transform="rotate(315) scale(1.6)" />
+                <use href="#petal2" fill="#95CDF0" transform="rotate(20) scale(1.3)" />
+                <use href="#petal2" fill="#B0DCF5" transform="rotate(70) scale(1.0)" />
+                <use href="#petal2" fill="#C8E8FA" transform="rotate(140) scale(0.7)" />
+                <circle cx="0" cy="0" r="4" fill="#D4EFFF" />
+              </g>
+
+              {/* Medium rose */}
+              <g transform="translate(130, 210)">
+                <use href="#petal2" fill="#6CA6CD" transform="rotate(15) scale(1.8)" />
+                <use href="#petal2" fill="#7DB8D8" transform="rotate(65) scale(1.7)" />
+                <use href="#petal2" fill="#7DB8D8" transform="rotate(115) scale(1.6)" />
+                <use href="#petal2" fill="#8EC8E5" transform="rotate(165) scale(1.4)" />
+                <use href="#petal2" fill="#8EC8E5" transform="rotate(215) scale(1.3)" />
+                <use href="#petal2" fill="#A0D6EF" transform="rotate(265) scale(1.1)" />
+                <use href="#petal2" fill="#B4E0F5" transform="rotate(315) scale(0.9)" />
+                <use href="#petal2" fill="#C8EAFC" transform="rotate(30) scale(0.6)" />
+                <circle cx="0" cy="0" r="3" fill="#D4EFFF" />
+              </g>
+
+              {/* Small rose bud */}
+              <g transform="translate(50, 150)">
+                <use href="#petal2" fill="#87CEEB" transform="rotate(10) scale(1.4)" />
+                <use href="#petal2" fill="#99D6EF" transform="rotate(80) scale(1.2)" />
+                <use href="#petal2" fill="#99D6EF" transform="rotate(150) scale(1.1)" />
+                <use href="#petal2" fill="#ADD8E6" transform="rotate(220) scale(0.9)" />
+                <use href="#petal2" fill="#C0E4F0" transform="rotate(290) scale(0.7)" />
+                <circle cx="0" cy="0" r="2.5" fill="#D4EFFF" />
+              </g>
+
+              {/* Tiny bud */}
+              <g transform="translate(105, 155)">
+                <use href="#petal2" fill="#ADD8E6" transform="rotate(30) scale(0.9)" />
+                <use href="#petal2" fill="#B8E0F0" transform="rotate(120) scale(0.8)" />
+                <use href="#petal2" fill="#C8EAFC" transform="rotate(210) scale(0.6)" />
+              </g>
+
+              {/* Gold geometric lines */}
+              <line x1="150" y1="242" x2="8" y2="242" stroke="#C9A96E" strokeWidth="0.7" opacity="0.35" />
+              <line x1="8" y1="242" x2="8" y2="110" stroke="#C9A96E" strokeWidth="0.7" opacity="0.35" />
+              <line x1="145" y1="236" x2="14" y2="236" stroke="#C9A96E" strokeWidth="0.5" opacity="0.2" />
+              <line x1="14" y1="236" x2="14" y2="115" stroke="#C9A96E" strokeWidth="0.5" opacity="0.2" />
+            </svg>
+
+            <div className="couple-image-wrapper">
+              <video
+                className="couple-image"
+                src="/assets/images/couple-video.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+              />
+              <div className="couple-image-glow" />
+            </div>
           </div>
         </motion.div>
 
@@ -671,9 +834,26 @@ const HomePage = () => {
           ♥
         </motion.div>
         <motion.p className="footer-hashtag" variants={fadeInUp}>
-          #JayarAndKatleenForever
+          #JRAndKatForever&ever
         </motion.p>
       </motion.section>
+
+      {/* Scroll to top FAB */}
+      <AnimatePresence>
+        {showScrollTop && (
+          <motion.button
+            className="scroll-top-fab"
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0 }}
+            transition={{ duration: 0.3 }}
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            aria-label="Scroll to top"
+          >
+            ▲
+          </motion.button>
+        )}
+      </AnimatePresence>
     </div>
   )
 }
