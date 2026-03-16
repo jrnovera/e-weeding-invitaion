@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import LadyIllustration from '../components/LadyIllustration'
 import GentlemanIllustration from '../components/GentlemanIllustration'
@@ -32,18 +32,180 @@ const staggerFast = {
   visible: { transition: { staggerChildren: 0.08 } },
 }
 
-const carouselImages = [
-  { src: '/assets/images/palauig-1.jpg', label: 'Magalawa Island' },
-  { src: '/assets/images/palauig-2.jpg', label: 'Locloc Beach' },
-  { src: '/assets/images/palauig-3.jpg', label: 'Mount Tapulao' },
-  { src: '/assets/images/palauig-4.jpg', label: 'Bagsit River' },
-  { src: '/assets/images/palauig-5.jpg', label: 'San Juan Beach' },
+
+const galleryItems = [
+  { label: 'First New Year', caption: 'First New Year Together', image: '/assets/images/firstNewYear.png' },
+  { label: 'The Proposal', caption: 'She said yes!', image: '/assets/images/ItsAYes.png' },
+  { label: 'Pre-Nuptial', caption: 'Love in every frame' },
+  { label: 'Our Moment', caption: 'Our Moment', type: 'video', src: '/assets/images/IMG_0668.mov' },
+  { label: 'Together', caption: 'Our journey together', image: '/assets/images/together.jpg' },
+  { label: 'Adventure', caption: 'Exploring the world', image: '/assets/images/Adventure.jpg' },
+  { label: 'Beach Time', caption: 'Sun, sand & love', image: '/assets/images/beachtime.jpeg' },
+  { label: 'Ligawan Stage', caption: 'A beautiful stage of love', image: '/assets/images/Ligawan Stage.jpg' },
+  { label: 'Kulitan Bago Matulog', caption: 'Fun before bedtime', image: '/assets/images/KulitanBagoMatulog.jpeg' },
+  { label: 'Forever', caption: 'Just the beginning', image: '/assets/images/atTheBigening.jpg' },
 ]
+
+const GalleryCarousel = () => {
+  const [activeIndex, setActiveIndex] = useState(0)
+  const trackRef = useRef(null)
+  const autoPlayRef = useRef(null)
+  const videoPlayingRef = useRef(false)
+  const itemCount = galleryItems.length
+  // Duplicate items 3x for seamless looping
+  const repeatedItems = [...galleryItems, ...galleryItems, ...galleryItems]
+  const offsetIndex = itemCount // start from the middle set
+
+  const scrollToIndex = useCallback((index) => {
+    if (!trackRef.current) return
+    const track = trackRef.current
+    const items = track.querySelectorAll('.gallery-carousel-item')
+    const targetItem = items[index + offsetIndex]
+    if (!targetItem) return
+    const trackRect = track.parentElement.getBoundingClientRect()
+    const itemRect = targetItem.getBoundingClientRect()
+    const scrollLeft = track.parentElement.scrollLeft + itemRect.left - trackRect.left - (trackRect.width / 2) + (itemRect.width / 2)
+    track.parentElement.scrollTo({ left: scrollLeft, behavior: 'smooth' })
+  }, [offsetIndex])
+
+  const advanceToNext = useCallback(() => {
+    setActiveIndex((prev) => (prev + 1) % itemCount)
+  }, [itemCount])
+
+  // Auto-advance (skip interval when video is playing)
+  useEffect(() => {
+    const currentItem = galleryItems[activeIndex]
+    if (currentItem.type === 'video') {
+      videoPlayingRef.current = true
+      clearInterval(autoPlayRef.current)
+      return
+    }
+    videoPlayingRef.current = false
+    autoPlayRef.current = setInterval(() => {
+      advanceToNext()
+    }, 3000)
+    return () => clearInterval(autoPlayRef.current)
+  }, [activeIndex, itemCount, advanceToNext])
+
+  // Scroll to active item when it changes
+  useEffect(() => {
+    scrollToIndex(activeIndex)
+  }, [activeIndex, scrollToIndex])
+
+  // Center the carousel on mount
+  useEffect(() => {
+    if (!trackRef.current) return
+    const wrapper = trackRef.current.parentElement
+    const items = trackRef.current.querySelectorAll('.gallery-carousel-item')
+    const targetItem = items[offsetIndex]
+    if (!targetItem) return
+    const wrapperRect = wrapper.getBoundingClientRect()
+    const itemRect = targetItem.getBoundingClientRect()
+    wrapper.scrollLeft = wrapper.scrollLeft + itemRect.left - wrapperRect.left - (wrapperRect.width / 2) + (itemRect.width / 2)
+  }, [offsetIndex])
+
+  const handleItemClick = (realIndex) => {
+    setActiveIndex(realIndex)
+  }
+
+  const activeItem = galleryItems[activeIndex]
+
+  return (
+    <motion.section
+      className="gallery-section"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: '-100px' }}
+      variants={stagger}
+    >
+      <motion.h2 className="section-title" variants={fadeInUp}>
+        Our Love Story
+      </motion.h2>
+      <motion.div className="section-divider" variants={fadeInUp}>
+        <span className="divider-line"></span>
+        <span className="divider-heart">♥</span>
+        <span className="divider-line"></span>
+      </motion.div>
+
+      {/* Carousel Strip */}
+      <div className="gallery-carousel-wrapper">
+        <div className="gallery-carousel-track" ref={trackRef}>
+          {repeatedItems.map((item, index) => {
+            const realIndex = index % itemCount
+            return (
+              <div
+                key={index}
+                className={`gallery-carousel-item ${realIndex === activeIndex ? 'active' : ''}`}
+                onClick={() => handleItemClick(realIndex)}
+              >
+                <div className="gallery-photo">
+                  {item.type === 'video' ? (
+                    <video
+                      className="gallery-image"
+                      src={item.src}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      ref={(el) => { if (el) el.playbackRate = 0.5 }}
+                    />
+                  ) : item.image ? (
+                    <img src={item.image} alt={item.label} className="gallery-image" />
+                  ) : (
+                    <div className="gallery-placeholder">
+                      <span>{item.label}</span>
+                    </div>
+                  )}
+                </div>
+                <p className="gallery-caption">{item.caption}</p>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+
+      {/* Large Preview */}
+      <div className="gallery-preview">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeIndex}
+            className="gallery-preview-content"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 0.4, ease: 'easeOut' }}
+          >
+            {activeItem.type === 'video' ? (
+              <video
+                className="gallery-preview-media"
+                src={activeItem.src}
+                autoPlay
+                muted
+                playsInline
+                ref={(el) => { if (el) el.playbackRate = 0.5 }}
+                onEnded={() => {
+                  videoPlayingRef.current = false
+                  advanceToNext()
+                }}
+              />
+            ) : activeItem.image ? (
+              <img src={activeItem.image} alt={activeItem.label} className="gallery-preview-media" />
+            ) : (
+              <div className="gallery-preview-placeholder">
+                <span>{activeItem.label}</span>
+              </div>
+            )}
+            <p className="gallery-preview-caption">{activeItem.caption}</p>
+          </motion.div>
+        </AnimatePresence>
+      </div>
+    </motion.section>
+  )
+}
 
 const HomePage = () => {
   const audioRef = useRef(null)
   const [isMusicPlaying, setIsMusicPlaying] = useState(false)
-  const [currentSlide, setCurrentSlide] = useState(0)
 
   useEffect(() => {
     // Pick up audio started from envelope page, or create new
@@ -57,6 +219,7 @@ const HomePage = () => {
         const audio = new Audio('/assets/music/wedding-song.mp3')
         audio.volume = 0.3
         audio.loop = true
+        audio.currentTime = 5
         audioRef.current = audio
       }
       if (audioRef.current.paused) {
@@ -66,8 +229,10 @@ const HomePage = () => {
       }
     }
 
-    const timer = setTimeout(playMusic, 300)
+    // Auto-play immediately
+    playMusic()
 
+    // Fallback: retry on first user interaction (browsers may block autoplay)
     const handleInteraction = () => {
       playMusic()
       window.removeEventListener('click', handleInteraction)
@@ -80,19 +245,10 @@ const HomePage = () => {
     window.addEventListener('scroll', handleInteraction)
 
     return () => {
-      clearTimeout(timer)
       window.removeEventListener('click', handleInteraction)
       window.removeEventListener('touchstart', handleInteraction)
       window.removeEventListener('scroll', handleInteraction)
     }
-  }, [])
-
-  // Background carousel auto-advance
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % carouselImages.length)
-    }, 5000)
-    return () => clearInterval(interval)
   }, [])
 
   const toggleMusic = () => {
@@ -181,19 +337,17 @@ const HomePage = () => {
         animate="visible"
         variants={stagger}
       >
-        {/* Background image carousel */}
+        {/* Background video */}
         <div className="hero-bg-carousel">
-          <AnimatePresence mode="sync">
-            <motion.div
-              key={currentSlide}
-              className="hero-bg-slide"
-              style={{ backgroundImage: `url(${carouselImages[currentSlide].src})` }}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 1.5, ease: 'easeInOut' }}
-            />
-          </AnimatePresence>
+          <video
+            className="hero-bg-video"
+            src="/assets/images/vecteezy_slow-motion-of-a-woman-standing-alone-at-the-beach_2383783.mp4"
+            autoPlay
+            loop
+            muted
+            playsInline
+            ref={(el) => { if (el) el.playbackRate = 0.5 }}
+          />
         </div>
         <div className="hero-bg-overlay" />
 
@@ -263,16 +417,16 @@ const HomePage = () => {
       >
         {/* Raining petals */}
         <div className="petals">
-          {[...Array(35)].map((_, i) => (
+          {[...Array(15)].map((_, i) => (
             <div
               key={i}
               className="petal-item"
               style={{
-                left: `${(i * 2.9) % 100}%`,
-                animationDelay: `${(i * 0.5) % 7}s`,
-                animationDuration: `${4 + (i % 5) * 1.2}s`,
+                left: `${(i * 6.7) % 100}%`,
+                animationDelay: `${(i * 1.2) % 10}s`,
+                animationDuration: `${5 + (i % 5) * 1.5}s`,
                 fontSize: `${12 + (i % 6) * 3}px`,
-                opacity: 0.35 + (i % 4) * 0.15,
+                opacity: 0.15 + (i % 4) * 0.08,
               }}
             >
               {i % 3 === 0 ? '❀' : i % 3 === 1 ? '✿' : '❁'}
@@ -326,43 +480,8 @@ const HomePage = () => {
         </div>
       </motion.section>
 
-      {/* Photo Gallery */}
-      <motion.section
-        className="gallery-section"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: '-100px' }}
-        variants={stagger}
-      >
-        <motion.h2 className="section-title" variants={fadeInUp}>
-          Our Love Story
-        </motion.h2>
-        <motion.div className="section-divider" variants={fadeInUp}>
-          <span className="divider-line"></span>
-          <span className="divider-heart">♥</span>
-          <span className="divider-line"></span>
-        </motion.div>
-
-        <motion.div className="gallery-grid" variants={staggerFast}>
-          {[
-            { label: 'First Date', caption: 'Where it all began' },
-            { label: 'The Proposal', caption: 'She said yes!' },
-            { label: 'Pre-Nuptial', caption: 'Love in every frame' },
-            { label: 'Together', caption: 'Our journey together' },
-            { label: 'Adventure', caption: 'Exploring the world' },
-            { label: 'Forever', caption: 'Just the beginning' },
-          ].map((photo, index) => (
-            <motion.div key={index} className="gallery-item" variants={scaleIn}>
-              <div className="gallery-photo">
-                <div className="gallery-placeholder">
-                  <span>{photo.label}</span>
-                </div>
-              </div>
-              <p className="gallery-caption">{photo.caption}</p>
-            </motion.div>
-          ))}
-        </motion.div>
-      </motion.section>
+      {/* Our Love Story Carousel */}
+      <GalleryCarousel />
 
       {/* Entourage Section */}
       <motion.section
