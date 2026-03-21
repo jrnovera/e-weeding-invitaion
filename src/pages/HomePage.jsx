@@ -32,6 +32,40 @@ const staggerFast = {
   visible: { transition: { staggerChildren: 0.08 } },
 }
 
+const useCountdown = (targetDate) => {
+  const [timeLeft, setTimeLeft] = useState(() => {
+    const diff = targetDate - new Date()
+    if (diff <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0 }
+    return {
+      days: Math.floor(diff / (1000 * 60 * 60 * 24)),
+      hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
+      minutes: Math.floor((diff / (1000 * 60)) % 60),
+      seconds: Math.floor((diff / 1000) % 60),
+    }
+  })
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const diff = targetDate - new Date()
+      if (diff <= 0) {
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 })
+        clearInterval(timer)
+        return
+      }
+      setTimeLeft({
+        days: Math.floor(diff / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
+        minutes: Math.floor((diff / (1000 * 60)) % 60),
+        seconds: Math.floor((diff / 1000) % 60),
+      })
+    }, 1000)
+    return () => clearInterval(timer)
+  }, [targetDate])
+
+  return timeLeft
+}
+
+const WEDDING_DATE = new Date('2026-04-25T14:00:00')
 
 const galleryItems = [
   { label: 'First New Year', caption: 'First New Year Together', image: '/assets/images/firstNewYear.png' },
@@ -149,7 +183,7 @@ const GalleryCarousel = () => {
                       playsInline
                     />
                   ) : item.image ? (
-                    <img src={item.image} alt={item.label} className="gallery-image" />
+                    <img src={item.image} alt={item.label} className="gallery-image" loading="lazy" />
                   ) : (
                     <div className="gallery-placeholder">
                       <span>{item.label}</span>
@@ -187,7 +221,7 @@ const GalleryCarousel = () => {
                 }}
               />
             ) : activeItem.image ? (
-              <img src={activeItem.image} alt={activeItem.label} className="gallery-preview-media" />
+              <img src={activeItem.image} alt={activeItem.label} className="gallery-preview-media" loading="lazy" />
             ) : (
               <div className="gallery-preview-placeholder">
                 <span>{activeItem.label}</span>
@@ -205,6 +239,7 @@ const HomePage = () => {
   const audioRef = useRef(null)
   const [isMusicPlaying, setIsMusicPlaying] = useState(false)
   const [showScrollTop, setShowScrollTop] = useState(false)
+  const countdown = useCountdown(WEDDING_DATE)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -228,8 +263,16 @@ const HomePage = () => {
         const audio = new Audio('/assets/music/wedding-song.mp3')
         audio.volume = 0.3
         audio.loop = true
-        audio.currentTime = 5
+        audio.preload = 'auto'
         audioRef.current = audio
+        audio.addEventListener('canplaythrough', () => {
+          audio.currentTime = 5
+          audio.play().then(() => {
+            setIsMusicPlaying(true)
+          }).catch(() => {})
+        }, { once: true })
+        audio.load()
+        return
       }
       if (audioRef.current.paused) {
         audioRef.current.play().then(() => {
@@ -323,7 +366,7 @@ const HomePage = () => {
     },
     bestMan: 'Romnick Globio',
     maidOfHonor: 'Dianne Ritz Gines',
-    groomsmen: ['Gerone Ginez', 'Aldrin Maranoc', 'Fermar Santianes', 'Justine Navarro', 'Laurence Maranoc', 'Roldan Ambuyoc'],
+    groomsmen: ['Gerone Ginez', 'Aldrin Maranoc', 'Fermar Santianes', 'Justine Navarro', 'Laurence Maranoc', 'Roldan Ambuyoc', 'Thomas Arvin Custodio'],
     bridesmaids: ['April Banaag', 'Jessica Ginez', 'Christine May Abaga', 'Glenda Kempis', 'Kimberly Guanzon', 'Baybee Jeanne Oben', 'Camille Labuton'],
     ringBearers: ['Owen Ginez', 'Nicolo Globio', 'Gian Arangorin'],
     flowerGirls: ['Gelexza Yulireign Ginez', 'Dea Marcela Ginez', 'Amira Arangorin'],
@@ -408,6 +451,21 @@ const HomePage = () => {
           <h2 className="date-main">April 25, 2026</h2>
           <p className="date-time">2:00 in the Afternoon</p>
           <p className="date-venue">Immaculate Conception Parish, Palauig, Zambales</p>
+        </motion.div>
+        <motion.div className="countdown-container" variants={fadeInUp}>
+          <div className="countdown-grid">
+            {[
+              { value: countdown.days, label: 'Days' },
+              { value: countdown.hours, label: 'Hours' },
+              { value: countdown.minutes, label: 'Minutes' },
+              { value: countdown.seconds, label: 'Seconds' },
+            ].map((item) => (
+              <div className="countdown-item" key={item.label}>
+                <span className="countdown-value">{String(item.value).padStart(2, '0')}</span>
+                <span className="countdown-label">{item.label}</span>
+              </div>
+            ))}
+          </div>
         </motion.div>
         <motion.div className="hero-ornament bottom-ornament" variants={fadeInUp}>
           ✦ ✦ ✦
@@ -624,6 +682,7 @@ const HomePage = () => {
                 loop
                 muted
                 playsInline
+                preload="none"
               />
               <div className="couple-image-glow" />
             </div>

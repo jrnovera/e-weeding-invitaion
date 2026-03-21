@@ -16,8 +16,12 @@ const EnvelopePage = () => {
     const audio = new Audio('/assets/music/wedding-song.mp3')
     audio.volume = 0.3
     audio.loop = true
-    audio.currentTime = 5
-    audio.play().catch(() => {})
+    audio.preload = 'auto'
+    audio.addEventListener('canplaythrough', () => {
+      audio.currentTime = 5
+      audio.play().catch(() => {})
+    }, { once: true })
+    audio.load()
     window.__weddingAudio = audio
 
     setTimeout(() => {
