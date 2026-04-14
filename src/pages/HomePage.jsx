@@ -70,7 +70,6 @@ const WEDDING_DATE = new Date('2026-04-25T14:00:00')
 const galleryItems = [
   { label: 'First New Year', caption: 'First New Year Together', image: '/assets/images/firstNewYear.png' },
   { label: 'The Proposal', caption: 'She said yes!', image: '/assets/images/ItsAYes.png' },
-  { label: 'Pre-Nuptial', caption: 'Love in every frame' },
   { label: 'Our Moment', caption: 'Our Moment', type: 'video', src: '/assets/images/IMG_0668.mov' },
   { label: 'Together', caption: 'Our journey together', image: '/assets/images/together.jpg' },
   { label: 'Adventure', caption: 'Exploring the world', image: '/assets/images/Adventure.jpg' },
@@ -269,7 +268,7 @@ const HomePage = () => {
           audio.currentTime = 5
           audio.play().then(() => {
             setIsMusicPlaying(true)
-          }).catch(() => {})
+          }).catch(() => { })
         }, { once: true })
         audio.load()
         return
@@ -277,7 +276,7 @@ const HomePage = () => {
       if (audioRef.current.paused) {
         audioRef.current.play().then(() => {
           setIsMusicPlaying(true)
-        }).catch(() => {})
+        }).catch(() => { })
       }
     }
 
@@ -311,53 +310,62 @@ const HomePage = () => {
     } else {
       audioRef.current.play().then(() => {
         setIsMusicPlaying(true)
-      }).catch(() => {})
+      }).catch(() => { })
     }
   }
 
   const entourage = {
     principalSponsors: [
-      { ninong: 'Vice Mayor Billy Aceron', ninang: 'Magdalena Maranoc' },
-      { ninong: 'Sb Bernard Aceron', ninang: 'Nida Caancan' },
-      { ninong: 'Sb. Franklin Nancin', ninang: 'Vilma Arangorin' },
-      { ninong: 'Atty. Christopher Laurence Monato', ninang: 'Irene Globio' },
-      { ninong: 'Sb. Eric Alba', ninang: 'Marie Arangorin' },
-      { ninong: 'ABC Brgy. Captain Mr. Lloyd Ambuyoc ', ninang: "Mrs. Editha Ambuyoc"},
-      { ninong: 'Brgy. Captain Antonio Asis', ninang: 'Brgy. Kgwd Paz Ambuyoc' },
-      { ninong: 'Brgy. Captain Joy Escobal', ninang: 'Marie Trapsi' },
-      { ninong: 'Brgy. Kgwd Jimuel Fronda', ninang: 'Anita Sevilla' },
-      { ninong: 'Ricardo Yabut', ninang: 'Emilie Segismundo' },
-      { ninong: 'Alex Revelar', ninang: 'Mariz Revelar' },
-      { ninong: 'Sarly Aninzo', ninang: 'Mary Jane Maranoc' },
-      { ninong: 'District Supervisor Mr. Richard Doctolero ', ninang: ' Mrs.Ruby Doctolero '},
-      { ninong: 'Isagani Ginez', ninang: 'Cristina Ginez' },
-      { ninong: 'David Amistad', ninang: 'Sheryl Arangorin' },
-      { ninong: 'Enrique Quinto', ninang: 'Carina Maranoc' },
-      { ninong: 'Edgar Araboy', ninang: 'Arlene Quijano' },
-      { ninong: 'Mario Anoche', ninang: 'Flory Fe Arconado' },
-      { ninong: 'Delfin Abaga', ninang: 'Chonchita Ordonia' },
-      { ninong: 'Val Obviasca', ninang: 'Feliciana De Leon' },
-      { ninong: 'Jerrel Aragon', ninang: 'Christy Umayam' },
-      { ninong: 'Neil Asis', ninang: 'Elsa Ambuyoc' },
-      { ninong: 'Rolando Tuazon', ninang: 'Levi Forones' },
-      { ninong: 'Ernie Quijano', ninang: 'Dina Arangorin' },
-      { ninong: 'Carlo Arangaorin', ninang: 'Marilyn Altares' },
-      {ninong: "Nestor Aledo", ninang: ""}
+      { ninong: 'Hon. Vice Mayor Billy Aceron', ninang: 'Mrs. Magdalena Maranoc' },
+      { ninong: 'Hon. SB. Bernard Aceron', ninang: 'Mrs. Nida Caancan' },
+      { ninong: 'Hon. SB. Franklin Nancin', ninang: 'Mrs. Vilma Arangorin' },
+      { ninong: 'Hon. SB. Eric Alba', ninang: 'Mrs. Rose Marie Arangorin' },
+      { ninong: 'Former BM Ricardo Yabut', ninang: 'Mrs. Floremia Yabut' },
+      { ninong: 'Former SB Atty. Christopher Laurence Monato', ninang: 'Mrs. Irene Globio' },
+      { ninong: 'Hon. ABC Brgy. Capt. Lloyd Ambuyoc', ninang: 'Mrs. Editha Ambuyoc' },
+      { ninong: 'Hon. Brgy. Capt. Antonio Asis', ninang: 'Hon. Brgy. Kgwd Paz Ambuyoc' },
+      { ninong: 'Hon. Brgy. Capt. Joy Escobal', ninang: 'Mrs. Anna Marie Dalit' },
+      { ninong: 'Hon. Brgy. Kgwd Jimuel Fronda', ninang: 'Mrs. Anita Sevilla' },
+      { ninong: 'Mr. Rudy Mercurio', ninang: 'Hon. Brgy. Capt. Lyn Mercurio' },
+      { ninong: 'Engr. Richard Abdon', ninang: 'Mrs. Emilie Segismundo' },
+      { ninong: 'Dist. Supv. Richard Doctolero', ninang: 'Mrs. Ruby Doctolero' },
+      { ninong: 'Mr. Alex Revelar', ninang: 'Mrs. Mariz Revelar' },
+      { ninong: 'Mr. Sarly Aninzo', ninang: 'Mrs. Mary Jane Maranoc' },
+      { ninong: 'Mr. Isagani Ginez', ninang: 'Mrs. Cristina Surop' },
+      { ninong: 'Mr. Jeffrey Ginez', ninang: 'Mrs. Sheryl Arangorin' },
+      { ninong: 'Mr. Enrique Quinto', ninang: 'Mrs. Carina Maranoc' },
+      { ninong: 'Mr. Edgar Araboy', ninang: 'Mrs. Arlene Quijano' },
+      { ninong: 'Mr. Mario Anoche', ninang: 'Mrs. Glorife Arconado' },
+      { ninong: 'Mr. David Amistad', ninang: 'Mrs. Chonchita Ordonia' },
+      { ninong: 'Mr. Val Obviasca', ninang: 'Mrs. Feliciana De Leon' },
+      { ninong: 'Mr. Jerrel Aragon', ninang: 'Mrs. Christy Umayam' },
+      { ninong: 'Mr. Neil Asis', ninang: 'Mrs. Elsa Ambuyoc' },
+      { ninong: 'Mr. Rolando Tuazon', ninang: 'Mrs. Levi Forones' },
+      { ninong: 'Mr. Carlo Arangorin', ninang: 'Mrs. Dina Arangorin' },
+      { ninong: 'Mr. Ernie Quijano', ninang: 'Mrs. Marilyn Altares' },
+      { ninong: 'Mr. Maynard Altares', ninang: 'Mrs. Vilma Custodio' },
+      { ninong: 'Mr. Silvino Moreno III', ninang: 'Mrs. Nina Moreno' },
+      { ninong: 'Mr. Nestor Aguas', ninang: 'Mrs. Maria Doromal' },
+      { ninong: 'Mr. Leo Portin', ninang: 'Mrs. Marieta Portin' },
+      { ninong: 'Mr. Celso Navarro', ninang: 'Mrs. Nancy Navarro' },
+      { ninong: 'Mr. Obet Globio', ninang: 'Mrs. Jeaneth Globio' },
+      { ninong: 'Mr. Luis Labuton', ninang: 'Mrs. Elsa Labuton' },
+      { ninong: 'Mr. Larry Miranda', ninang: 'Mrs. Mila Miranda' },
+      { ninong: 'Mr. Pablito Edora', ninang: 'Mrs. Maria Elisa Edora' },
+      { ninong: 'Mr. Nestor Aledo', ninang: 'Mrs. Brendalie Aledo' },
+      { ninong: 'Mr. Delfin Abaga', ninang: 'Mrs. Analyn Abaga' },
+      { ninong: 'Mr. Roy Manalo', ninang: 'Mrs. Jeanette Manalo' },
+      { ninong: 'Mr. John Arangorin', ninang: 'Mrs. Rosali Arangorin' },
+      { ninong: 'Mr. Ramoncito Pecson', ninang: 'Mrs. Olivia Pecson' },
+      { ninong: 'Mr. Jerry Angeles', ninang: 'Mrs. Heidi Louise Monato' },
+      { ninong: 'Hon. Brgy. Kgwd Felipe Manzano', ninang: 'Mrs. Michelle Erandio' },
+      { ninong: 'Mr. Marlon Edquibal', ninang: 'Mrs. Rita Edquibal' }
     ],
-    sponsorCouples: [
-      'Mr. and Mrs. Nestor Aguas',
-      'Mr. and Mrs. Leo Portin',
-      'Mr. & Mrs. Tong Navarro',
-      'Mr. and Mrs. Globio',
-      'Mr. and Mrs. Ramoncito Pecson',
-      'Mr. & Mrs. Luis Labuton',
-      'Mr. and Mrs. Larry Miranda',
-      'Mr. and Mrs. Pablito Edora Jr',
-    ],
+    sponsorCouples: [],
     parents: {
       groom: [
         { role: "Groom's Father", name: 'Fred Abaga' },
-        { role: "Groom's Mother", name: 'Daisy Abaga' },
+        { role: "Groom's Mother", name: 'Elsie Maranoc' },
       ],
       bride: [
         { role: "Bride's Father", name: 'Rony Olea' },
@@ -366,10 +374,12 @@ const HomePage = () => {
     },
     bestMan: 'Romnick Globio',
     maidOfHonor: 'Dianne Ritz Gines',
-    groomsmen: ['Gerone Ginez', 'Aldrin Maranoc', 'Fermar Santianes', 'Justine Navarro', 'Laurence Maranoc', 'Roldan Ambuyoc', 'Thomas Arvin Custodio'],
-    bridesmaids: ['April Banaag', 'Jessica Ginez', 'Christine May Abaga', 'Glenda Kempis', 'Kimberly Guanzon', 'Baybee Jeanne Oben', 'Camille Labuton'],
-    ringBearers: ['Owen Ginez', 'Nicolo Globio', 'Gian Arangorin'],
-    flowerGirls: ['Gelexza Yulireign Ginez', 'Dea Marcela Ginez', 'Amira Arangorin'],
+    groomsmen: ['Gerone Ginez', 'Aldrin Maranoc', 'Fermar Santianes', 'Justine Navarro', 'Laurence Maranoc', 'Roldan Ambuyoc', 'Thomas Arvin Custodio', 'Denis Aguas'],
+    bridesmaids: ['April Banaag', 'Jessica Ginez', 'Christine May Abaga', 'Glenda Kempis', 'Kimberly Guanzon', 'Baybee Jeanne Oben', 'Camille Labuton', 'Laura Alexandra Gaspardis'],
+    ringBearer: 'Nicolo Globio',
+    coinBearer: 'Gian Frey Arangorin',
+    bibleBearer: 'Owen Anoche',
+    flowerGirls: ['Gelexza Yuliriegn Ginez', 'Dea Marcela', 'Amira Arangorin'],
   }
 
   return (
@@ -403,7 +413,7 @@ const HomePage = () => {
         </div>
         <div className="hero-bg-overlay" />
 
-<motion.div className="hero-ornament top-ornament" variants={fadeInUp}>
+        <motion.div className="hero-ornament top-ornament" variants={fadeInUp}>
           ✦ ✦ ✦
         </motion.div>
         <motion.p className="hero-subtitle" variants={fadeInUp}>
@@ -800,15 +810,21 @@ const HomePage = () => {
           </div>
         </motion.div>
 
-        {/* Ring Bearers & Flower Girls */}
-        <motion.div className="entourage-group side-by-side" variants={fadeInUp}>
-          <div className="entourage-half">
-            <h3 className="entourage-role">Ring Bearers</h3>
-            {entourage.ringBearers.map((name, i) => (
-              <p key={i} className="person-name">{name}</p>
-            ))}
+        {/* Bearers & Flower Girls */}
+        <motion.div className="entourage-group" variants={fadeInUp}>
+          <div style={{ marginBottom: '32px' }}>
+            <h3 className="entourage-role">Ring Bearer</h3>
+            <p className="person-name">{entourage.ringBearer}</p>
           </div>
-          <div className="entourage-half">
+          <div style={{ marginBottom: '32px' }}>
+            <h3 className="entourage-role">Coin Bearer</h3>
+            <p className="person-name">{entourage.coinBearer}</p>
+          </div>
+          <div style={{ marginBottom: '32px' }}>
+            <h3 className="entourage-role">Bible Bearer</h3>
+            <p className="person-name">{entourage.bibleBearer}</p>
+          </div>
+          <div>
             <h3 className="entourage-role">Flower Girls</h3>
             {entourage.flowerGirls.map((name, i) => (
               <p key={i} className="person-name">{name}</p>
@@ -861,17 +877,60 @@ const HomePage = () => {
             <h3>Gentlemen</h3>
             <p>Formal suit or barong</p>
             <div className="color-palette">
-              <div className="color-swatch" style={{ background: '#B0E0E6' }} title="Powder Blue"></div>
-              <div className="color-swatch" style={{ background: '#87CEEB' }} title="Sky Blue"></div>
-              <div className="color-swatch" style={{ background: '#6CA6CD' }} title="Steel Blue"></div>
-              <div className="color-swatch" style={{ background: '#ADD8E6' }} title="Light Blue"></div>
+              <div className="color-swatch" style={{ background: '#000000' }} title="Black"></div>
+              <div className="color-swatch" style={{ background: '#000080' }} title="Navy Blue"></div>
+              <div className="color-swatch" style={{ background: '#FFFFFF' }} title="White"></div>
             </div>
-            <p className="color-labels">Powder Blue · Sky Blue · Steel Blue · Light Blue</p>
+            <p className="color-labels">Black · Navy Blue · White</p>
           </motion.div>
         </motion.div>
 
         <motion.div className="dresscode-avoid-wrapper" variants={fadeInUp}>
-         
+
+        </motion.div>
+      </motion.section>
+
+      {/* Reception Location */}
+      <motion.section
+        className="reception-section"
+        style={{ padding: '80px 20px', background: '#fff', textAlign: 'center', position: 'relative' }}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-100px' }}
+        variants={stagger}
+      >
+        <motion.h2 className="section-title" variants={fadeInUp}>
+          Reception Location
+        </motion.h2>
+        <motion.div className="section-divider" variants={fadeInUp}>
+          <span className="divider-line"></span>
+          <span className="divider-heart">♥</span>
+          <span className="divider-line"></span>
+        </motion.div>
+
+        <motion.div
+          className="map-wrapper"
+          variants={fadeInUp}
+          style={{ maxWidth: '800px', margin: '0 auto', borderRadius: '16px', overflow: 'hidden', boxShadow: '0 16px 40px rgba(13, 59, 102, 0.12)', position: 'relative' }}
+        >
+          {/* Invisible overlay link that captures all clicks on the map */}
+          <a
+            href="https://www.google.com/maps/search/?api=1&query=15.452598,119.920680"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 10, cursor: 'pointer' }}
+            aria-label="Open in Google Maps app or browser"
+            title="Click to open in Google Maps"
+          ></a>
+          <iframe
+            title="Reception Map"
+            src="https://maps.google.com/maps?q=15.452598,119.920680&hl=en&z=15&output=embed"
+            width="100%"
+            height="400"
+            style={{ border: 0, display: 'block' }}
+            allowFullScreen={false}
+            loading="lazy"
+          ></iframe>
         </motion.div>
       </motion.section>
 
@@ -893,7 +952,7 @@ const HomePage = () => {
           ♥
         </motion.div>
         <motion.p className="footer-hashtag" variants={fadeInUp}>
-          #JRAndKatForever&ever
+          #Jr&amp;KatSayIdo
         </motion.p>
       </motion.section>
 
