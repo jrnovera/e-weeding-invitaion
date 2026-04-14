@@ -374,7 +374,7 @@ const HomePage = () => {
     },
     bestMan: 'Romnick Globio',
     maidOfHonor: 'Dianne Ritz Gines',
-    groomsmen: ['Gerone Ginez', 'Aldrin Maranoc', 'Fermar Santianes', 'Justine Navarro', 'Laurence Maranoc', 'Roldan Ambuyoc', 'Thomas Arvin Custodio', 'Denis Aguas'],
+    groomsmen: ['Gerone Ginez', 'Aldrin Maranoc', 'Fermar Victoria', 'Justine Navarro', 'Laurence Maranoc', 'Roldan Ambuyoc', 'Thomas Arvin Custodio', 'Denis Aguas'],
     bridesmaids: ['April Banaag', 'Jessica Ginez', 'Christine May Abaga', 'Glenda Kempis', 'Kimberly Guanzon', 'Baybee Jeanne Oben', 'Camille Labuton', 'Laura Alexandra Gaspardis'],
     ringBearer: 'Nicolo Globio',
     coinBearer: 'Gian Frey Arangorin',
