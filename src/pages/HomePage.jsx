@@ -75,7 +75,7 @@ const galleryItems = [
   { label: 'Adventure', caption: 'Exploring the world', image: '/assets/images/Adventure.jpg' },
   { label: 'Beach Time', caption: 'Sun, sand & love', image: '/assets/images/beachtime.jpeg' },
   { label: 'Ligawan Stage', caption: 'A beautiful stage of love', image: '/assets/images/Ligawan Stage.jpg' },
-  { label: 'Kulitan Bago Matulog', caption: 'Fun before bedtime', image: '/assets/images/KulitanBagoMatulog.jpeg' },
+
   { label: 'Forever', caption: 'Just the beginning', image: '/assets/images/atTheBigening.jpg' },
 ]
 
